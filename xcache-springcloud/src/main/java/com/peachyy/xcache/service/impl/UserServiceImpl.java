@@ -1,6 +1,5 @@
 package com.peachyy.xcache.service.impl;
 
-import com.peachyy.xcache.annation.Cacheable;
 import com.peachyy.xcache.entity.User;
 import com.peachyy.xcache.service.UserService;
 
