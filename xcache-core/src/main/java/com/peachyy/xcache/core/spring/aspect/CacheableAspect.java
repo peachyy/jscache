@@ -6,6 +6,7 @@ import com.peachyy.xcache.core.CacheMetadataSpring;
 import com.peachyy.xcache.core.CacheService;
 import com.peachyy.xcache.core.DefaultKeyGenerator;
 import com.peachyy.xcache.core.key.KeyGenerator;
+import com.peachyy.xcache.core.monitor.MetricsMonitor;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -36,6 +37,7 @@ public class CacheableAspect {
         Object o =cacheService.getCache(key);
         if(o!=null){
             log.debug(" method {} cache key {} hit",cacheMetadata.getMethod(),key);
+            MetricsMonitor.getCountTotal().incrementAndGet();
             return o;
         }
         Object result=proceedingJoinPoint.proceed();

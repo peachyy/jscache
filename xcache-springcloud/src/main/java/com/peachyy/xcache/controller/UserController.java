@@ -21,7 +21,7 @@ public class UserController {
     @GetMapping("/byId")
     @ResponseBody
     public User getUserById(Integer userId){
-        User user= new User();// null;userService.getUserById(userId);
+        User user= userService.getUserById(userId);
         return user;
     }
 }
