@@ -22,7 +22,7 @@ public class SearializerUtils {
 
     public static void init(String type){
         if(type==null || type.isEmpty()){
-            type="FastJson";
+            type="fastJson";
         }
         switch (type){
             case "java":

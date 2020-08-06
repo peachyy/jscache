@@ -1,6 +1,7 @@
 package com.peachyy.xcache.controller;
 
 import com.peachyy.xcache.entity.User;
+import com.peachyy.xcache.service.OrderService;
 import com.peachyy.xcache.service.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,8 @@ import java.util.List;
 public class UserController {
     @Autowired
     private UserService userService;
+    @Autowired
+    private OrderService orderService;
 
     @GetMapping("/byId")
     @ResponseBody
@@ -31,5 +34,10 @@ public class UserController {
     public List<User> getUserById2(Integer userId){
         List<User> user= userService.getUsers(userId);
         return user;
+    }
+    @GetMapping("/orderBy")
+    @ResponseBody
+    public String orderBy(Integer userId){
+        return orderService.say();
     }
 }
