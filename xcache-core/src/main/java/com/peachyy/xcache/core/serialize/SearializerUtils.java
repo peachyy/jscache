@@ -3,6 +3,8 @@ package com.peachyy.xcache.core.serialize;
 import com.peachyy.xcache.core.Serializer;
 import com.peachyy.xcache.core.exception.CacheException;
 
+import org.springframework.util.ClassUtils;
+
 import java.io.IOException;
 
 import lombok.extern.slf4j.Slf4j;
@@ -32,14 +34,19 @@ public class SearializerUtils {
             case "jackson":
                 serializer=new JackJsonSerializer();
                 break;
-            case "gson":
-                serializer=new GsonSerializer();
-                break;
-            case "FastJson":
+            case "fastJson":
                 serializer=new FastJsonSerializer();
                 break;
             default:
-                throw new CacheException("cache searializer type error!");
+               //
+                try {
+                    serializer= (Serializer) ClassUtils.forName(type,
+                            SearializerUtils.class.getClassLoader()).newInstance();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    throw new CacheException("serializer type "+type+" fail:"+ e.getMessage());
+                }
+                break;
 
         }
         log.info("use searializer {} {}",type,serializer.getClass().getName());

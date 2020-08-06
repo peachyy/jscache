@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 /**
  * @author Xs.Tao
  */
@@ -22,6 +24,12 @@ public class UserController {
     @ResponseBody
     public User getUserById(Integer userId){
         User user= userService.getUserById(userId);
+        return user;
+    }
+    @GetMapping("/byId2")
+    @ResponseBody
+    public List<User> getUserById2(Integer userId){
+        List<User> user= userService.getUsers(userId);
         return user;
     }
 }

@@ -7,20 +7,13 @@ import java.io.IOException;
 /**
  * @author Xs.Tao
  */
-public interface Serializer {
+public interface Serializer<T> {
 
     String name();
 
     byte[] serialize(Object obj) throws IOException;
 
 
-    Object deserialize(byte[] bytes) throws IOException ;
+    <T> T deserialize(byte[] bytes) throws IOException ;
 
-    default boolean canSerialize(Class<?> type) {
-        return ClassUtils.isAssignable(getTargetType(), type);
-    }
-
-    default Class<?> getTargetType() {
-        return Object.class;
-    }
 }

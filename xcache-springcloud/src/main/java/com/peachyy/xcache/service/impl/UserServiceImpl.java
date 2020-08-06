@@ -6,6 +6,9 @@ import com.peachyy.xcache.service.UserService;
 
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -29,5 +32,29 @@ public class UserServiceImpl implements UserService {
         user.setName("xxx");
         log.info("GET getUserById");
         return user;
+    }
+
+    @Override
+    @Cacheable(prefix = "names",key = "#p0")
+    public List<User> getUsers(Integer cache) {
+        User user1=new User();
+        user1.setId(cache);
+        user1.setName("user1");
+        User user2=new User();
+        user2.setId(cache);
+        user2.setName("user2");
+        User user3=new User();
+        user3.setId(cache);
+        user3.setName("user3");
+        User user4=new User();
+        user4.setId(cache);
+        user4.setName("user4");
+        List<User> list=new ArrayList<>();
+        list.add(user1);
+        list.add(user2);
+        list.add(user3);
+        list.add(user4);
+
+        return list;
     }
 }

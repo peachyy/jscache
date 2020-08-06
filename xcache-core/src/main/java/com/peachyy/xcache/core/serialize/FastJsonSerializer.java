@@ -13,7 +13,7 @@ import java.io.IOException;
 public class FastJsonSerializer implements Serializer {
     @Override
     public String name() {
-        return "FastJson";
+        return "fastJson";
     }
 
     @Override

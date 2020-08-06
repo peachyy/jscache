@@ -12,7 +12,7 @@ import org.springframework.core.type.AnnotationMetadata;
 public class AspectmportSelector implements ImportSelector {
     @Override
     public String[] selectImports(AnnotationMetadata annotationMetadata) {
-        SearializerUtils.init(null);
+        SearializerUtils.init("FastJson");
         return new String[]{CacheableAspect.class.getName(),CacheEvictAspect.class.getName(), DefaultCacheServiceImpl.class.getName()};
     }
 }

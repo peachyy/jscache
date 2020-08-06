@@ -38,4 +38,10 @@ public @interface Cacheable {
      * @return
      */
     String condition() default "";
+
+    /**
+     * allow null vlaue
+     * @return
+     */
+    boolean allowNullValue() default false;
 }
