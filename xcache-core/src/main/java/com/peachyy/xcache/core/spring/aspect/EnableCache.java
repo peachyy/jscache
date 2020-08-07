@@ -1,5 +1,7 @@
 package com.peachyy.xcache.core.spring.aspect;
 
+import com.peachyy.xcache.core.advisor.CacheAdvisorSelector;
+
 import org.springframework.context.annotation.Import;
 
 import java.lang.annotation.Documented;

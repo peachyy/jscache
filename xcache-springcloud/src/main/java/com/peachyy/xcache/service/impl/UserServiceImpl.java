@@ -24,7 +24,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @Cacheable(prefix = "name",key = "#p0")
+
     //@Cacheable
     public User getUserById(Integer userId) {
         User user=new User();
