@@ -12,8 +12,7 @@ import java.lang.reflect.Method;
  * @author Xs.Tao
  */
 public class DubboCacheMetadata extends CacheMetadata {
-    public static CacheMetadata build(Invoker<?> invoker, Invocation invocation){
-        CacheMetadata cacheMetadata=new CacheMetadata();
+    public static CacheMetadata build(CacheMetadata cacheMetadata,Invoker<?> invoker, Invocation invocation){
         cacheMetadata.setArguments(invocation.getArguments());
         cacheMetadata.setParameterTypes(invocation.getParameterTypes());
         Method method = ReflectionUtils.findMethod(invoker.getInterface(),invocation.getMethodName(),invocation.getParameterTypes());

@@ -1,7 +1,7 @@
 package com.peachyy.xcache.dubbo;
 
 import com.peachyy.xcache.annation.Cacheable;
-import com.peachyy.xcache.common.CacheMetadata;
+import com.peachyy.xcache.common.CacheableMetadata;
 import com.peachyy.xcache.core.CacheService;
 import com.peachyy.xcache.core.DefaultKeyGenerator;
 import com.peachyy.xcache.core.key.KeyGenerator;
@@ -30,9 +30,10 @@ public class CacheFilter implements Filter {
 
     @Override
     public Result invoke(Invoker<?> invoker, Invocation invocation) throws RpcException {
-        CacheMetadata cacheMetadata=DubboCacheMetadata.build(invoker,invocation);
+        CacheableMetadata cacheMetadata=new CacheableMetadata();
+        DubboCacheMetadata.build(cacheMetadata,invoker,invocation);
         if(cacheMetadata.getMethod().isAnnotationPresent(Cacheable.class)){
-            Cacheable cacheable=cacheMetadata.getMethod().getAnnotation(Cacheable.class);
+            Cacheable cacheable =cacheMetadata.getMethod().getAnnotation(Cacheable.class);
             cacheMetadata.setKey(cacheable.key());
             cacheMetadata.setPrefix(cacheable.prefix());
             cacheMetadata.setCondition(cacheable.condition());
