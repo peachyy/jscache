@@ -10,7 +10,7 @@ import java.lang.annotation.Target;
 /**
  * @author Xs.Tao
  */
-@Target({ElementType.METHOD, ElementType.TYPE})
+@Target({ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
 @Inherited
 @Documented
@@ -44,4 +44,6 @@ public @interface Cacheable {
      * @return
      */
     boolean allowNullValue() default false;
+
+
 }

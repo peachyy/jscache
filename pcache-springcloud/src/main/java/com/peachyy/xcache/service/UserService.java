@@ -20,5 +20,6 @@ public interface UserService {
 
     void deleteUser(Integer userId);
     @CachePut(prefix = "name",key = "#p0")
+    @CachePut(prefix = "aname",key = "#p0")
     User updateUserById(Integer userId);
 }

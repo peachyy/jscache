@@ -1,13 +1,17 @@
 package com.peachyy.xcache.core.advisor;
 
 import com.peachyy.xcache.annation.CacheEvict;
+import com.peachyy.xcache.annation.CacheEvicts;
 import com.peachyy.xcache.annation.CachePut;
+import com.peachyy.xcache.annation.CachePuts;
 import com.peachyy.xcache.annation.Cacheable;
 import com.peachyy.xcache.common.CacheEvictMetadata;
 import com.peachyy.xcache.common.CacheMetadata;
 import com.peachyy.xcache.common.CachePutMetadata;
 import com.peachyy.xcache.common.CacheableMetadata;
 
+import org.springframework.beans.factory.config.BeanDefinition;
+import org.springframework.context.annotation.Role;
 import org.springframework.core.annotation.AnnotatedElementUtils;
 import org.springframework.util.ObjectUtils;
 
@@ -28,6 +32,7 @@ import lombok.Setter;
 /**
  * @author Xs.Tao
  */
+@Role(BeanDefinition.ROLE_INFRASTRUCTURE)
 public class CacheAnnoationOperationParse implements CacheOperationParse{
 
     private final    Map<CacheKey, List<CacheMetadata>> cachesHold = new ConcurrentHashMap<>(1024);
@@ -37,6 +42,8 @@ public class CacheAnnoationOperationParse implements CacheOperationParse{
         supportAnnations.add(Cacheable.class);
         supportAnnations.add(CacheEvict.class);
         supportAnnations.add(CachePut.class);
+        supportAnnations.add(CachePuts.class);
+        supportAnnations.add(CacheEvicts.class);
     }
     private final List<CacheMetadata> empty= Collections.emptyList();
 
@@ -69,11 +76,23 @@ public class CacheAnnoationOperationParse implements CacheOperationParse{
                 forEach(it-> ops.add(doPraseCacheable((Cacheable) it,method,targetClass)));
         annotations.stream().filter(it->it instanceof CacheEvict).
                 forEach(it-> ops.add(doPraseEvict((CacheEvict) it,method,targetClass)));
+        annotations.stream().filter(it->it instanceof CacheEvicts).
+                forEach(it-> ops.addAll(doPraseEvicts((CacheEvicts) it,method,targetClass)));
         annotations.stream().filter(it->it instanceof CachePut).
                 forEach(it-> ops.add(doPrasePut((CachePut) it,method,targetClass)));
+        annotations.stream().filter(it->it instanceof CachePuts).
+                forEach(it-> ops.addAll(doPrasePuts((CachePuts) it,method,targetClass)));
         return Optional.ofNullable(ops);
     }
     @SuppressWarnings("Duplicates")
+    protected List<CacheMetadata> doPrasePuts(CachePuts cachePuts, Method method, Class targetClass){
+        CachePut[] cachePut=cachePuts.value();
+        List<CacheMetadata> list=new ArrayList<>(cachePut.length);
+        for(CachePut it:cachePut){
+            list.add(doPrasePut(it,method,targetClass));
+        }
+        return list;
+    }
     protected CacheMetadata doPrasePut(CachePut cachePut, Method method, Class targetClass){
         CachePutMetadata cachePutMetadata =new CachePutMetadata();
         applyBase(cachePutMetadata,targetClass,method);
@@ -94,6 +113,14 @@ public class CacheAnnoationOperationParse implements CacheOperationParse{
         cacheMetadata.setTtl(cacheable.ttl());
         cacheMetadata.setAnnotation(cacheable);
         return cacheMetadata;
+    }
+    protected List<CacheMetadata> doPraseEvicts(CacheEvicts cacheEvicts,Method method, Class targetClass){
+        CacheEvict[] cacheEvict=cacheEvicts.value();
+        List<CacheMetadata> list=new ArrayList<>(cacheEvict.length);
+        for(CacheEvict it:cacheEvict){
+            list.add(doPraseEvict(it,method,targetClass));
+        }
+        return list;
     }
     protected CacheMetadata doPraseEvict(CacheEvict cacheEvict,Method method, Class targetClass){
         CacheEvictMetadata cacheEvictMetadata=new CacheEvictMetadata();

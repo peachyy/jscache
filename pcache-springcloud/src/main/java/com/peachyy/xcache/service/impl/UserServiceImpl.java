@@ -61,6 +61,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @CacheEvict(prefix = "name",key = "#p0")
+    @CacheEvict(prefix = "aname",key = "#p0")
     public void deleteUser(Integer userId) {
         log.info("删除了用户{}",userId);
     }
