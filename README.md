@@ -1,8 +1,8 @@
 # jscache
 
-jscache is a Java cache framework.
+jscache is a java simple cache framework.
 
-一个轮子 Java 缓存工具(cache)，支持本地缓存与远程调用(RPC)缓存保持共用一套规范，基于Spring AOP、Spring El
+一个轮子 Java 简单的缓存工具(cache)，支持本地缓存与远程调用(RPC)缓存保持共用一套规范，基于Spring AOP、Spring El
 
 # Spring Cache 不爽的几点
 1、项目中之前使用的是`Spring Cache` 用`CacheManager`来管理生成`Cache` 有的同学觉得比如在缓存的时候加自定义的过期时间觉得麻烦了，当然由于设计架构的原因必须新建一个`CacheManager`来解决，这种设计本身OK的，而且对于缓存管理来说也是正确的。
