@@ -69,7 +69,6 @@ public class Application {
     ....
   }
 ```
-内置缓存
 
 
 支持的RPC框架
