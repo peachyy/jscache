@@ -50,6 +50,9 @@ public class RedisClient implements Closeable, AutoCloseable {
     private JedisSentinelPool sentinel;
     private ShardedJedisPool  sharded;
 
+    public RedisClient(){
+
+    }
     public static class Builder {
         private String          mode;
         private String          hosts;
