@@ -22,17 +22,19 @@ pcache-core       实现
 
 pcache-dubbo      dubbo适配 `规划中`
 
-pcache-grpc       pcache-grpc适配 `规划中
+pcache-grpc       grpc适配 `规划中`
  
-pcache-springcloud springcloud适配 `规划中
+pcache-springcloud springcloud适配 `规划中`
 
 # 监控
  
  待完善 目前规划是 `Micrometer` 
 
-默认使用的是`fastJson`进行序列化 内部还实现了`jackJson` `java` 支持自定义实现。
+
 
 # 示例
+
+默认使用的是`fastJson`进行序列化 内部还实现了`jackJson` `java` 支持自定义实现。
 
 启用缓存 使用`@EnableCache`注解引入功能支持
 
