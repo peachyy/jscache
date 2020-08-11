@@ -36,10 +36,10 @@ public class JedisCache implements Cache {
     }
     public JedisCache(Properties props,String prefix){
         JedisPoolConfig poolConfig=newPoolConfig(props,prefix);
-        String hosts = props.getProperty("hosts", "47.106.117.45:6379");
+        String hosts = props.getProperty("hosts", "127.0.0.1:6379");
         String mode = props.getProperty("mode", "single");
         String clusterName = props.getProperty("cluster_name");
-        String password = props.getProperty("password","hyzh@2018");
+        String password = props.getProperty("password","");
         int database = Integer.parseInt(props.getProperty("database", "0"));
         boolean ssl = Boolean.valueOf(props.getProperty("ssl", "false"));
         this.redisClient = new RedisClient.Builder()
