@@ -1,5 +1,7 @@
 package com.peachyy.xcache.service.impl;
 
+import com.peachyy.xcache.annation.CacheEvict;
+import com.peachyy.xcache.annation.CachePut;
 import com.peachyy.xcache.annation.Cacheable;
 import com.peachyy.xcache.entity.User;
 import com.peachyy.xcache.service.UserService;
@@ -25,7 +27,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
 
-    //@Cacheable
+    @Cacheable(prefix = "name",key = "#p0")
     public User getUserById(Integer userId) {
         User user=new User();
         user.setId(userId);
@@ -56,5 +58,21 @@ public class UserServiceImpl implements UserService {
         list.add(user4);
 
         return list;
+    }
+
+    @Override
+    @CacheEvict(prefix = "name",key = "#p0")
+    public void deleteUser(Integer userId) {
+        log.info("删除了用户{}",userId);
+    }
+
+    @Override
+    @CachePut(prefix = "name",key = "#p0")
+    public User updateUserById(Integer userId) {
+        User user=new User();
+        user.setId(userId);
+        user.setName("xxxupdate");
+        log.info("GET updateUserById");
+        return user;
     }
 }

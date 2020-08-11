@@ -1,4 +1,4 @@
-package com.peachyy.xcache.core.spring.aspect;
+package com.peachyy.xcache.core.key;
 
 import com.peachyy.xcache.common.CacheMetadata;
 import com.peachyy.xcache.core.key.KeyGenerator;
@@ -32,24 +32,33 @@ public class SpringElKeyGenerator implements KeyGenerator {
      */
     private final ParameterNameDiscoverer parameterNameDiscoverer;
 
-    private Map<Method,Expression> expressionCacheMap =new ConcurrentHashMap<>();
+    private Map<ExpressionKey,Expression> expressionCacheMap =new ConcurrentHashMap<>();
 
     public SpringElKeyGenerator(){
         SpelParserConfiguration spelParserConfiguration = new SpelParserConfiguration(SpelCompilerMode.IMMEDIATE, null);
         spelExpressionParser = new SpelExpressionParser(spelParserConfiguration);
         parameterNameDiscoverer = new DefaultParameterNameDiscoverer();
     }
+    private ExpressionKey createCacheKey(CacheMetadata metadata){
+        return new ExpressionKey(new AnnotatedEleKey(metadata.getMethod(),metadata.getClazz()),metadata.getKey());
+    }
 
     @Override
     public String generate(CacheMetadata metadata) {
-        Expression expression=expressionCacheMap.get(metadata.getMethod());
+        return generate(metadata,metadata.getArguments());
+    }
+
+    @Override
+    public String generate(CacheMetadata metadata, Object[] arguments) {
+        ExpressionKey cacheKey=createCacheKey(metadata);
+        Expression expression=expressionCacheMap.get(cacheKey);
         if(null==expression){
             expression = spelExpressionParser.parseExpression(metadata.getKey());
-            expressionCacheMap.putIfAbsent(metadata.getMethod(),expression);
+            expressionCacheMap.putIfAbsent(cacheKey,expression);
         }
         StandardEvaluationContext context =
                 new MethodBasedEvaluationContext( TypedValue.NULL,
-                        metadata.getMethod(),metadata.getArguments(),parameterNameDiscoverer);
+                        metadata.getMethod(),arguments==null?metadata.getArguments():arguments,parameterNameDiscoverer);
         Object val=expression.getValue(context);
         return metadata.getPrefix().concat(Objects.toString(val));
     }

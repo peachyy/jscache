@@ -2,7 +2,7 @@ package com.peachyy.xcache.core.spring.aspect;
 
 import com.peachyy.xcache.annation.Cacheable;
 import com.peachyy.xcache.common.CacheMetadata;
-import com.peachyy.xcache.core.CacheMetadataSpring;
+import com.peachyy.xcache.common.CacheableMetadata;
 import com.peachyy.xcache.core.CacheService;
 import com.peachyy.xcache.core.DefaultKeyGenerator;
 import com.peachyy.xcache.core.key.KeyGenerator;
@@ -21,14 +21,15 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Aspect()
 @Slf4j
-public class CacheableAspect {
+public class CacheableAspect extends AspectSupport {
 
     @Autowired
     private CacheService cacheService;
     private KeyGenerator keyGenerator =new DefaultKeyGenerator();
     @Around(value = "@annotation(cacheable)")
     public Object around(ProceedingJoinPoint proceedingJoinPoint, Cacheable cacheable) throws Throwable {
-        CacheMetadata cacheMetadata= CacheMetadataSpring.build(proceedingJoinPoint);
+        CacheableMetadata cacheMetadata=new CacheableMetadata();
+        build(cacheMetadata,proceedingJoinPoint);
         cacheMetadata.setKey(cacheable.key());
         cacheMetadata.setPrefix(cacheable.prefix());
         cacheMetadata.setCondition(cacheable.condition());

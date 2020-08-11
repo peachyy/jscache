@@ -1,4 +1,4 @@
-package com.peachyy.xcache.core.jedis;
+package com.peachyy.xcache.core.support.jedis;
 
 import com.peachyy.xcache.core.Cache;
 import com.peachyy.xcache.core.serialize.SearializerUtils;
@@ -59,7 +59,7 @@ public class JedisCache implements Cache {
 
     @Override
     public Object get(Object key) {
-        byte[] o=redisClient.get().get(Objects.toString(key).getBytes());
+        byte[] o=redisClient.get().get(keytoBytes(key));
         return o!=null && o.length>0?SearializerUtils.deserialize(o):null;
     }
 
@@ -71,7 +71,7 @@ public class JedisCache implements Cache {
 
     @Override
     public void put(Object key, Object value, long ttl) {
-        byte[] keys=Objects.toString(key).getBytes();
+        byte[] keys=keytoBytes(key);
         redisClient.get().set(keys, SearializerUtils.serialize(value));
         if(ttl>0){
             redisClient.get().expire(keys,Integer.valueOf(ttl+""));
@@ -81,6 +81,10 @@ public class JedisCache implements Cache {
 
     @Override
     public void evict(Object key) {
-
+        redisClient.get().del(keytoBytes(key));
+    }
+    private byte[] keytoBytes(Object key){
+        byte[] keys=Objects.toString(key).getBytes();
+        return keys;
     }
 }

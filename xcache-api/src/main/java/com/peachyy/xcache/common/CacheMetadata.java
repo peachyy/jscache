@@ -21,7 +21,8 @@ public class CacheMetadata implements Serializable {
     private String prefix;
     private String key;
     private String condition;
-    private long ttl;
-    private boolean allowNullValue;
+
+
+    //ann
 
 }

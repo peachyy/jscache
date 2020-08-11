@@ -1,4 +1,4 @@
-package com.peachyy.xcache.core.spring.aspect;
+package com.peachyy.xcache.core;
 
 import com.peachyy.xcache.core.advisor.CacheAdvisorSelector;
 
@@ -16,7 +16,7 @@ import java.lang.annotation.Target;
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-@Import(AspectmportSelector.class)
+@Import(CacheAdvisorSelector.class)
 public @interface EnableCache {
 
     String serializer() default "";

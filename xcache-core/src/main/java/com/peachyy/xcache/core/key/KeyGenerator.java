@@ -13,4 +13,6 @@ public interface KeyGenerator {
      * @return
      */
     String  generate(CacheMetadata metadata);
+
+    String generate(CacheMetadata metadata,Object[] arguments);
 }

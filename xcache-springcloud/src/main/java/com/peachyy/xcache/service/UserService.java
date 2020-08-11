@@ -16,4 +16,8 @@ public interface UserService {
     User getUserById(Integer userId);
 
     List<User> getUsers(Integer cache);
+
+    void deleteUser(Integer userId);
+
+    User updateUserById(Integer userId);
 }

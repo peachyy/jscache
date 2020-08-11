@@ -1,7 +1,6 @@
 package com.peachyy.xcache.core;
 
-import com.peachyy.xcache.core.jedis.JedisCache;
-import com.peachyy.xcache.core.springredis.SpringRedisCache;
+import com.peachyy.xcache.core.support.jedis.JedisCache;
 
 import java.util.Properties;
 

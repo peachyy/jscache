@@ -1,7 +1,10 @@
-package com.peachyy.xcache.core.springredis;
+package com.peachyy.xcache.core.support.springredis;
 
 import com.peachyy.xcache.core.Cache;
 
+import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.BeanFactory;
+import org.springframework.beans.factory.BeanFactoryAware;
 import org.springframework.data.redis.core.RedisTemplate;
 
 import java.util.Objects;
@@ -13,9 +16,10 @@ import lombok.extern.slf4j.Slf4j;
  * @author Xs.Tao
  */
 @Slf4j
-public class SpringRedisCache implements Cache {
+public class SpringRedisCache implements Cache, BeanFactoryAware {
 
     private RedisTemplate<String, Object> redisTemplate;
+    private BeanFactory beanFactory;
 
     @Override
     public String getName() {
@@ -44,5 +48,11 @@ public class SpringRedisCache implements Cache {
     @Override
     public void evict(Object key) {
         redisTemplate.delete(Objects.toString(key));
+    }
+
+    @Override
+    public void setBeanFactory(BeanFactory beanFactory) throws BeansException {
+        this.beanFactory=beanFactory;
+        this.redisTemplate=beanFactory.getBean(RedisTemplate.class);
     }
 }

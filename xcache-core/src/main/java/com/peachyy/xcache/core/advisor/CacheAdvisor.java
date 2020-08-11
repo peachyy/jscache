@@ -13,33 +13,34 @@ public  class CacheAdvisor extends AbstractPointcutAdvisor implements Serializab
 
 
 
-    protected Pointcut pointcut;
-    protected Advice advice;
+    protected Pointcut cacheAnnationPointcut;
+    protected Advice cacheInterceptorAdvice;
 
     public CacheAdvisor(){
 
     }
-    public CacheAdvisor(Pointcut pointcut,Advice advice){
-        this.pointcut=pointcut;
-        this.advice=advice;
+    public CacheAdvisor(Pointcut cacheAnnationPointcut,Advice cacheInterceptorAdvice){
+        this.cacheAnnationPointcut=cacheAnnationPointcut;
+        this.cacheInterceptorAdvice=cacheInterceptorAdvice;
     }
 
 
     @Override
     public Pointcut getPointcut() {
-        return pointcut;
+        return cacheAnnationPointcut;
     }
 
     @Override
     public Advice getAdvice() {
-        return advice;
+        return cacheInterceptorAdvice;
     }
 
-    public void setPointcut(Pointcut pointcut) {
-        this.pointcut = pointcut;
+
+    public void setCacheAnnationPointcut(Pointcut cacheAnnationPointcut) {
+        this.cacheAnnationPointcut = cacheAnnationPointcut;
     }
 
-    public void setAdvice(Advice advice) {
-        this.advice = advice;
+    public void setCacheInterceptorAdvice(Advice cacheInterceptorAdvice) {
+        this.cacheInterceptorAdvice = cacheInterceptorAdvice;
     }
 }

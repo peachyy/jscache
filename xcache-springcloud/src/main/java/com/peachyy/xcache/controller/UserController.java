@@ -29,6 +29,18 @@ public class UserController {
         User user= userService.getUserById(userId);
         return user;
     }
+    @GetMapping("/deleteUser")
+    @ResponseBody
+    public String deleteUser(Integer userId){
+        userService.deleteUser(userId);
+        return "ok";
+    }
+    @GetMapping("/updateUser")
+    @ResponseBody
+    public User updateUserById(Integer userId){
+        User user= userService.updateUserById(userId);
+        return user;
+    }
     @GetMapping("/byId2")
     @ResponseBody
     public List<User> getUserById2(Integer userId){

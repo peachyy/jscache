@@ -5,6 +5,11 @@ package com.peachyy.xcache.core;
  */
 public class DefaultCacheServiceImpl implements CacheService {
     private CacheManager cacheManager=CacheManager.getCacheManager();
+
+    public void setCacheManager(CacheManager cacheManager) {
+        this.cacheManager = cacheManager;
+    }
+
     @Override
     public Object getCache(Object key) {
         return cacheManager.getCache().get(key);
