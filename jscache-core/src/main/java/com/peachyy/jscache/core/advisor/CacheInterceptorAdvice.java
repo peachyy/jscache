@@ -1,6 +1,8 @@
 package com.peachyy.jscache.core.advisor;
 
 import com.peachyy.jscache.common.CacheMetadata;
+import com.peachyy.jscache.core.Cache;
+import com.peachyy.jscache.core.CacheManager;
 import com.peachyy.jscache.core.CacheService;
 import com.peachyy.jscache.core.DefaultCacheServiceImpl;
 import com.peachyy.jscache.core.DefaultKeyGenerator;
@@ -9,6 +11,10 @@ import com.peachyy.jscache.core.key.KeyGenerator;
 
 import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
+import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.BeanFactory;
+import org.springframework.beans.factory.BeanFactoryAware;
+import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 
 import java.lang.reflect.Method;
 import java.util.List;
@@ -19,7 +25,7 @@ import lombok.extern.slf4j.Slf4j;
  * @author Xs.Tao
  */
 @Slf4j
-public class CacheInterceptorAdvice  extends  CacheAnnotationSupport implements MethodInterceptor{
+public class CacheInterceptorAdvice  extends  CacheAnnotationSupport implements MethodInterceptor, BeanFactoryAware {
     //@Autowired
     private CacheService cacheService=null;
     private KeyGenerator keyGenerator =null;
@@ -94,4 +100,19 @@ public class CacheInterceptorAdvice  extends  CacheAnnotationSupport implements 
     }
 
 
+    @Override
+    public void setBeanFactory(BeanFactory beanFactory) throws BeansException {
+        if(CacheManager.getCacheManager().getCache()==null){
+            try{
+                CacheManager.getCacheManager().setCache(beanFactory.getBean(Cache.class));
+            }catch (NoSuchBeanDefinitionException e){
+                throw new CacheException(Cache.class.getName()+" not found! ");
+            }
+
+            if(CacheManager.getCacheManager().getCache()==null){
+                throw new CacheException(Cache.class.getName()+" not found!! ");
+            }
+
+        }
+    }
 }

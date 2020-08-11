@@ -8,9 +8,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 /**
  * @author Xs.Tao
  */
-@SpringBootApplication( )
+@SpringBootApplication(exclude ={org.springframework.boot.autoconfigure.cache.CacheAutoConfiguration.class} )
 @EnableCache
-//@EableCaching
+//@EnableCaching
 public class Application {
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
