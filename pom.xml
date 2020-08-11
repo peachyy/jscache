@@ -69,7 +69,7 @@
     </dependency>
     <dependency>
       <groupId>com.peachyy</groupId>
-      <artifactId>xcache-api</artifactId>
+      <artifactId>xcache-annotation</artifactId>
       <version>${project.version}</version>
       <scope>compile</scope>
     </dependency>
