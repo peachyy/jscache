@@ -5,19 +5,19 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>com.peachyy</groupId>
-  <artifactId>xcache</artifactId>
+  <artifactId>pcache</artifactId>
   <packaging>pom</packaging>
   <version>1.0-SNAPSHOT</version>
   <modules>
-    <module>xcache-annotation</module>
-    <module>xcache-core</module>
-    <module>xcache-dubbo</module>
-    <module>xcache-springcloud</module>
-    <module>xcache-grpc</module>
+    <module>pcache-annotation</module>
+    <module>pcache-core</module>
+    <module>pcache-dubbo</module>
+    <module>pcache-springcloud</module>
+    <module>pcache-grpc</module>
   </modules>
 
-  <name>xcache</name>
-  <url>http://www.example.com</url>
+  <name>peachyy-cache</name>
+  <url>https://github.com/peachyy</url>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -69,28 +69,28 @@
     </dependency>
     <dependency>
       <groupId>com.peachyy</groupId>
-      <artifactId>xcache-annotation</artifactId>
+      <artifactId>pcache-annotation</artifactId>
       <version>${project.version}</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
       <groupId>com.peachyy</groupId>
-      <artifactId>xcache-core</artifactId>
+      <artifactId>pcache-core</artifactId>
       <version>${project.version}</version>
     </dependency>
     <dependency>
       <groupId>com.peachyy</groupId>
-      <artifactId>xcache-dubbo</artifactId>
+      <artifactId>pcache-dubbo</artifactId>
       <version>${project.version}</version>
     </dependency>
     <dependency>
       <groupId>com.peachyy</groupId>
-      <artifactId>xcache-springcloud</artifactId>
+      <artifactId>pcache-springcloud</artifactId>
       <version>${project.version}</version>
     </dependency>
     <dependency>
       <groupId>com.peachyy</groupId>
-      <artifactId>xcache-grpc</artifactId>
+      <artifactId>pcache-grpc</artifactId>
       <version>${project.version}</version>
     </dependency>
 
