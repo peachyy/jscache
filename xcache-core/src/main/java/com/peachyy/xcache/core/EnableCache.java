@@ -3,6 +3,7 @@ package com.peachyy.xcache.core;
 import com.peachyy.xcache.core.advisor.CacheAdvisorSelector;
 
 import org.springframework.context.annotation.Import;
+import org.springframework.core.Ordered;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
@@ -19,5 +20,7 @@ import java.lang.annotation.Target;
 @Import(CacheAdvisorSelector.class)
 public @interface EnableCache {
 
-    String serializer() default "";
+    String serializer() default "fastJson";
+
+    int order() default Ordered.LOWEST_PRECEDENCE;
 }

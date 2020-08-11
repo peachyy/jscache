@@ -67,7 +67,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @CachePut(prefix = "name",key = "#p0")
+
     public User updateUserById(Integer userId) {
         User user=new User();
         user.setId(userId);

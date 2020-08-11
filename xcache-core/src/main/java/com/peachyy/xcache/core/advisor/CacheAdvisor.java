@@ -3,18 +3,20 @@ package com.peachyy.xcache.core.advisor;
 import org.aopalliance.aop.Advice;
 import org.springframework.aop.Pointcut;
 import org.springframework.aop.support.AbstractPointcutAdvisor;
+import org.springframework.core.Ordered;
 
 import java.io.Serializable;
 
 /**
  * @author Xs.Tao
  */
-public  class CacheAdvisor extends AbstractPointcutAdvisor implements Serializable {
+public  class CacheAdvisor extends AbstractPointcutAdvisor implements Serializable, Ordered {
 
 
 
     protected Pointcut cacheAnnationPointcut;
     protected Advice cacheInterceptorAdvice;
+    private  int order;
 
     public CacheAdvisor(){
 
@@ -42,5 +44,15 @@ public  class CacheAdvisor extends AbstractPointcutAdvisor implements Serializab
 
     public void setCacheInterceptorAdvice(Advice cacheInterceptorAdvice) {
         this.cacheInterceptorAdvice = cacheInterceptorAdvice;
+    }
+
+
+    public void setOrder(int order) {
+        this.order=order;
+    }
+
+    @Override
+    public int getOrder() {
+        return order;
     }
 }

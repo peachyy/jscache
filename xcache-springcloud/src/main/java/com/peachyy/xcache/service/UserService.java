@@ -1,5 +1,6 @@
 package com.peachyy.xcache.service;
 
+import com.peachyy.xcache.annation.CachePut;
 import com.peachyy.xcache.annation.Cacheable;
 import com.peachyy.xcache.entity.User;
 
@@ -18,6 +19,6 @@ public interface UserService {
     List<User> getUsers(Integer cache);
 
     void deleteUser(Integer userId);
-
+    @CachePut(prefix = "name",key = "#p0")
     User updateUserById(Integer userId);
 }
