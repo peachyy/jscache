@@ -5,15 +5,15 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>com.peachyy</groupId>
-  <artifactId>pcache</artifactId>
+  <artifactId>jscache</artifactId>
   <packaging>pom</packaging>
   <version>1.0-SNAPSHOT</version>
   <modules>
-    <module>pcache-annotation</module>
-    <module>pcache-core</module>
-    <module>pcache-dubbo</module>
-    <module>pcache-springcloud</module>
-    <module>pcache-grpc</module>
+    <module>jscache-annotation</module>
+    <module>jscache-core</module>
+    <module>jscache-dubbo</module>
+    <module>jscache-springcloud</module>
+    <module>jscache-grpc</module>
   </modules>
 
   <name>peachyy-cache</name>
@@ -69,28 +69,28 @@
     </dependency>
     <dependency>
       <groupId>com.peachyy</groupId>
-      <artifactId>pcache-annotation</artifactId>
+      <artifactId>jscache-annotation</artifactId>
       <version>${project.version}</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
       <groupId>com.peachyy</groupId>
-      <artifactId>pcache-core</artifactId>
+      <artifactId>jscache-core</artifactId>
       <version>${project.version}</version>
     </dependency>
     <dependency>
       <groupId>com.peachyy</groupId>
-      <artifactId>pcache-dubbo</artifactId>
+      <artifactId>jscache-dubbo</artifactId>
       <version>${project.version}</version>
     </dependency>
     <dependency>
       <groupId>com.peachyy</groupId>
-      <artifactId>pcache-springcloud</artifactId>
+      <artifactId>jscache-springcloud</artifactId>
       <version>${project.version}</version>
     </dependency>
     <dependency>
       <groupId>com.peachyy</groupId>
-      <artifactId>pcache-grpc</artifactId>
+      <artifactId>jscache-grpc</artifactId>
       <version>${project.version}</version>
     </dependency>
 
