@@ -9,7 +9,7 @@
   <packaging>pom</packaging>
   <version>1.0-SNAPSHOT</version>
   <modules>
-    <module>xcache-api</module>
+    <module>xcache-annotation</module>
     <module>xcache-core</module>
     <module>xcache-dubbo</module>
     <module>xcache-springcloud</module>

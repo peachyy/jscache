@@ -15,7 +15,7 @@
     <dependencies>
         <dependency>
             <groupId>com.peachyy</groupId>
-            <artifactId>xcache-api</artifactId>
+            <artifactId>xcache-annotation</artifactId>
         </dependency>
         <dependency>
             <groupId>com.peachyy</groupId>
