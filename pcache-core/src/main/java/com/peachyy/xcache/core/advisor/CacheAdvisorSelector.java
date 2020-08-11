@@ -43,7 +43,7 @@ public class CacheAdvisorSelector implements ImportBeanDefinitionRegistrar {
 
 
         RootBeanDefinition cacheOperationParse=new RootBeanDefinition(CacheAnnoationOperationParse.class);
-        cacheInterceptorAdvice.setRole(BeanDefinition.ROLE_INFRASTRUCTURE);
+        cacheOperationParse.setRole(BeanDefinition.ROLE_INFRASTRUCTURE);
 
         registry.registerBeanDefinition("cacheAdvisor",cacheAdvisor);
         registry.registerBeanDefinition("cacheAnnationPointcut",cacheAnnationPointcut);

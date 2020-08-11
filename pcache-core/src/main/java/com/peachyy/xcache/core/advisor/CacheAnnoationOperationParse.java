@@ -10,8 +10,6 @@ import com.peachyy.xcache.common.CacheMetadata;
 import com.peachyy.xcache.common.CachePutMetadata;
 import com.peachyy.xcache.common.CacheableMetadata;
 
-import org.springframework.beans.factory.config.BeanDefinition;
-import org.springframework.context.annotation.Role;
 import org.springframework.core.annotation.AnnotatedElementUtils;
 import org.springframework.util.ObjectUtils;
 
@@ -32,7 +30,7 @@ import lombok.Setter;
 /**
  * @author Xs.Tao
  */
-@Role(BeanDefinition.ROLE_INFRASTRUCTURE)
+
 public class CacheAnnoationOperationParse implements CacheOperationParse{
 
     private final    Map<CacheKey, List<CacheMetadata>> cachesHold = new ConcurrentHashMap<>(1024);
