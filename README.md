@@ -11,21 +11,66 @@
  4、缓存监控 统计 比如我想看缓存命中情况 等。  
  5、其他
  
- 索性就放弃 `Spring Cache` 动手写一个简单的缓存工具
-   
+ 索性就放弃 `Spring Cache` 动手写一个简单的缓存工具 
+ 
+ 支持设置自定义过期时间ttl `虽然这可能有点不好，但还是提供了`    
 
+# 模块
+pcache-annotation 原注解信息 
 
+pcache-core       实现
 
-#feature
-* 支持设置自定义过期时间ttl `虽然这可能有点不好，但还是提供了` 
-* 
-扩展缓存
+pcache-dubbo      dubbo适配 `规划中`
 
+pcache-grpc       pcache-grpc适配 `规划中
+ 
+pcache-springcloud springcloud适配 `规划中
+
+# 监控
+ 
+ 待完善 目前规划是 `Micrometer` 
+
+默认使用的是`fastJson`进行序列化 内部还实现了`jackJson` `java` 支持自定义实现。
+
+# 示例
+
+启用缓存 使用`@EnableCache`注解引入功能支持
+
+```
+@SpringBootApplication
+@EnableCache
+public class Application {
+    public static void main(String[] args) {
+        SpringApplication.run(Application.class, args);
+    }
+}
+```
+ *注解中的key是`el`表达式 建议使用 p0 p1 p2的方式，这样就支持标注在接口方法上。*
+
+@Cacheable
+```
+  @Cacheable(prefix = "user",key = "#p0")
+  public User getUserById(Integer userId){
+    ....
+  }
+```
+@CachePut
+```
+  @CachePut(prefix = "user",key = "#p0")
+  @CachePut(prefix = "userTemp",key = "#p0")//支持多个
+  public User updateUserById(Integer userId){
+    ....
+  }
+```
+@Cacheable
+```
+  @CacheEvict(prefix = "user",key = "#p0")
+  public void delete(Integer userId){
+    ....
+  }
+```
 内置缓存
 
-示例
-
-问题
 
 支持的RPC框架
 
