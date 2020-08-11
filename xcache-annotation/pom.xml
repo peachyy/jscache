@@ -9,7 +9,6 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.peachyy</groupId>
     <artifactId>xcache-annotation</artifactId>
 
     <dependencies>
