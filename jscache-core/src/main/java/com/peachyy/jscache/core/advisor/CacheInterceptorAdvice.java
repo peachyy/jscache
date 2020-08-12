@@ -49,24 +49,7 @@ public class CacheInterceptorAdvice  extends  CacheAnnotationSupport implements 
             }
         };
         return execute(c,invocation.getThis(),invocation.getMethod(),invocation.getArguments());
-//        CacheMetadata cacheMetadata =build(invocation);
-//        cacheMetadata.setKey(cacheable.key());
-//        cacheMetadata.setPrefix(cacheable.prefix());
-//        cacheMetadata.setCondition(cacheable.condition());
-//        cacheMetadata.setTtl(cacheable.ttl());
-//        String key=keyGenerator.generate(cacheMetadata);
-//        Object o =cacheService.getCache(key);
-//        if(o!=null){
-//            log.debug(" method {} cache key {} hit",cacheMetadata.getMethod(),key);
-//            MetricsMonitor.getCountTotal().incrementAndGet();
-//            return o;
-//        }
-//        Object result = invocation.proceed();
-//        if(result!=null){
-//            cacheService.put(key,result,cacheable.ttl());
-//            log.debug("cache  key {} put success",key);
-//        }
-//        return result;
+
     }
 
     @Override
