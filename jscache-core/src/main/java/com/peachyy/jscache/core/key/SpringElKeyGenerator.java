@@ -48,16 +48,19 @@ public class SpringElKeyGenerator implements KeyGenerator {
 
     @Override
     public String generate(CacheMetadata metadata, Object[] arguments) {
-        ExpressionKey cacheKey=createCacheKey(metadata);
-        Expression expression=expressionCacheMap.get(cacheKey);
-        if(null==expression){
-            expression = spelExpressionParser.parseExpression(metadata.getKey());
-            expressionCacheMap.putIfAbsent(cacheKey,expression);
+        Object val=metadata.getKey();
+        if(arguments!=null && arguments.length>0){
+            ExpressionKey cacheKey=createCacheKey(metadata);
+            Expression expression=expressionCacheMap.get(cacheKey);
+            if(null==expression){
+                expression = spelExpressionParser.parseExpression(metadata.getKey());
+                expressionCacheMap.putIfAbsent(cacheKey,expression);
+            }
+            StandardEvaluationContext context =
+                    new MethodBasedEvaluationContext( TypedValue.NULL,
+                            metadata.getMethod(),arguments==null?metadata.getArguments():arguments,parameterNameDiscoverer);
+            val=expression.getValue(context);
         }
-        StandardEvaluationContext context =
-                new MethodBasedEvaluationContext( TypedValue.NULL,
-                        metadata.getMethod(),arguments==null?metadata.getArguments():arguments,parameterNameDiscoverer);
-        Object val=expression.getValue(context);
         return metadata.getPrefix().concat(Objects.toString(val));
     }
 }
