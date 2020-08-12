@@ -37,7 +37,7 @@ jscache-springcloud springcloud适配 `规划中`
 
 
 
-# 示例
+# API
 
 默认使用的是`fastJson`进行序列化 内部还实现了`jackJson` `java` 支持自定义实现。
 
@@ -57,6 +57,7 @@ public class Application {
 @Cacheable
 ```
   @Cacheable(prefix = "user",key = "#p0")
+  //@Cacheable(prefix = "user2",key = "#p0",ttl=3600)
   public User getUserById(Integer userId){
     ....
   }
