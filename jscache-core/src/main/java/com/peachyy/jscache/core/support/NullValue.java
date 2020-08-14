@@ -20,6 +20,9 @@ public final class NullValue implements Serializable {
 
 	@Override
 	public boolean equals( Object obj) {
+		if(obj instanceof  NullValue){
+			return true;
+		}
 		return (this == obj || obj == null);
 	}
 

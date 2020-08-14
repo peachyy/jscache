@@ -23,6 +23,12 @@ public class UserController {
     @Autowired
     private OrderService orderService;
 
+    @GetMapping("/nullValue")
+    @ResponseBody
+    public User nullValue(Integer userId){
+        User user= userService.nullValue(userId);
+        return user;
+    }
     @GetMapping("/byId")
     @ResponseBody
     public User getUserById(Integer userId){

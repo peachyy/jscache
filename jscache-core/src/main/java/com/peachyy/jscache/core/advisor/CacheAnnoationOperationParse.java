@@ -100,6 +100,7 @@ public class CacheAnnoationOperationParse implements CacheOperationParse{
         cachePutMetadata.setReturnCondition(cachePut.returnCondition());
         cachePutMetadata.setTtl(cachePut.ttl());
         cachePutMetadata.setAnnotation(cachePut);
+        cachePutMetadata.setAllowNullValue(cachePut.allowNullValue());
         return cachePutMetadata;
     }
     @SuppressWarnings("Duplicates")
@@ -112,6 +113,7 @@ public class CacheAnnoationOperationParse implements CacheOperationParse{
         cacheMetadata.setReturnCondition(cacheable.returnCondition());
         cacheMetadata.setTtl(cacheable.ttl());
         cacheMetadata.setAnnotation(cacheable);
+        cacheMetadata.setAllowNullValue(cacheable.allowNullValue());
         return cacheMetadata;
     }
     protected List<CacheMetadata> doPraseEvicts(CacheEvicts cacheEvicts,Method method, Class targetClass){

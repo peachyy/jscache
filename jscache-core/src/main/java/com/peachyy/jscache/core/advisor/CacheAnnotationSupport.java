@@ -63,10 +63,11 @@ public abstract class CacheAnnotationSupport   {
         List<CacheMetadata> puts=cacheMetadataMaps.get(CachePutMetadata.class);
 
         Object resultVal=doCacheable(new OperatorContext(cacheables,args));
+        Object unWrapResultVal=unWrapNullValue(resultVal);
         if(resultVal!=null && CollectionUtils.isEmpty(puts)){
             //没有put标识 那么就直接获取缓存
         }else{
-            resultVal=invoker.invoke();
+            unWrapResultVal=invoker.invoke();
             List<CachePutMetadata> resolvPuts=resolvingCacheableMetadata(cacheables);
             if(!CollectionUtils.isEmpty(resolvPuts)){
                 if(puts==null){
@@ -76,11 +77,11 @@ public abstract class CacheAnnotationSupport   {
             }
         }
         //puts
-        doPuts(new OperatorContext(puts,args),resultVal);
+        doPuts(new OperatorContext(puts,args),unWrapResultVal);
         //evict
         List<CacheMetadata> evicts=cacheMetadataMaps.get(CacheEvictMetadata.class);
         doEvcits(new OperatorContext(evicts,args));
-        return resultVal;
+        return unWrapResultVal;
     }
     protected String generate(CacheMetadata cacheMetadata,Object[] arguments){
         return getKeyGenerator().generate(cacheMetadata,arguments);
@@ -100,7 +101,7 @@ public abstract class CacheAnnotationSupport   {
                 Object result=getCache(key);
                 if(result!=null){
                     log.debug("{}->{} key {} hit",it.getClazz().getName(),it.getMethod().getName(),key);
-                    return unWrapNullValue(result);
+                    return result;
                 }
             }
         }
@@ -150,7 +151,7 @@ public abstract class CacheAnnotationSupport   {
         return reuslt;
     }
     protected Object unWrapNullValue(Object reuslt){
-        if(NullValue.INSTANCE == reuslt){
+        if(NullValue.INSTANCE.equals(reuslt)){
             return null;
         }
         return reuslt;

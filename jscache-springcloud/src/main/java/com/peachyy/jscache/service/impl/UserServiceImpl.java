@@ -34,7 +34,10 @@ public class UserServiceImpl implements UserService {
         log.info("GET getUserById");
         return user;
     }
-
+    @Cacheable(prefix = "names",key = "#p0",allowNullValue = true)
+    public User nullValue(Integer userId) {
+        return null;
+    }
     @Override
     @Cacheable(prefix = "names",key = "#p0")
     public List<User> getUsers(Integer cache) {

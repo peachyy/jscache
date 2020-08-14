@@ -12,7 +12,7 @@ public interface UserService {
 
     String getName(Integer userId);
 
-
+    public User nullValue(Integer userId);
     User getUserById(Integer userId);
 
     List<User> getUsers(Integer cache);
