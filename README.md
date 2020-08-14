@@ -43,6 +43,17 @@ jscache-springcloud springcloud适配 `规划中`
 
 启用缓存 使用`@EnableCache`注解引入功能支持
 
+`@Cacheable`
+
+| 属性                | 描述               |test   |
+| ------------------ | ------------------ |-------|
+| prefix             | 前缀               |前缀   |
+| key                | key spring el标识  |     |
+| ttl                | 缓存存活时间 默认-1 不过期            |           |
+| argCondition       | 参数条件 el 为true会执行此注解 false 则过滤            |          |
+| returnCondition    | 返回值条件el  为true则执行 false 过滤  变量#result表示返回值   |             |
+| allowNullValue    |  允许空值写入缓存 默认为false  可防止缓存穿透     |          |
+
 ```
 @SpringBootApplication
 @EnableCache
@@ -54,7 +65,7 @@ public class Application {
 ```
  *注解中的key是`el`表达式 建议使用 p0 p1 p2的方式，这样就支持标注在接口方法上。*
 
-@Cacheable
+@Cacheable 有缓存则获取缓存 没有则调用服务后再缓存
 ```
   @Cacheable(prefix = "user",key = "#p0")
   //@Cacheable(prefix = "user2",key = "#p0",ttl=3600)
@@ -62,7 +73,19 @@ public class Application {
     ....
   }
 ```
-@CachePut
+
+`@CachePut` 总是添加缓存
+
+| 属性                | 描述               |test   |
+| ------------------ | ------------------ |-------|
+| prefix             | 前缀               |前缀   |
+| key                | key spring el标识  |     |
+| ttl                | 缓存存活时间 默认-1 不过期            |           |
+| argCondition       | 参数条件 el 为true会执行此注解 false 则过滤            |          |
+| returnCondition    | 返回值条件el  为true则执行 false 过滤  变量#result表示返回值   |             |
+| allowNullValue    |  允许空值写入缓存 默认为false  可防止缓存穿透     |          |
+
+
 ```
   @CachePut(prefix = "user",key = "#p0")
   @CachePut(prefix = "userTemp",key = "#p0")//支持多个
@@ -70,7 +93,17 @@ public class Application {
     ....
   }
 ```
-@Cacheable
+
+
+`@CacheEvict`  移除缓存
+
+| 属性                | 描述               |test   |
+| ------------------ | ------------------ |-------|
+| prefix             | 前缀               |前缀   |
+| key                | key spring el标识  |     |
+| argCondition       | 参数条件 el 为true会执行此注解 false 则过滤            |          |
+
+
 ```
   @CacheEvict(prefix = "user",key = "#p0")
   public void delete(Integer userId){
