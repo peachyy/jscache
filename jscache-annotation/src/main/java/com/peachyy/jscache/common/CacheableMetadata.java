@@ -14,4 +14,5 @@ public class CacheableMetadata extends CacheMetadata {
     private long ttl;
     private boolean allowNullValue;
     private Cacheable annotation;
+    private String returnCondition;
 }

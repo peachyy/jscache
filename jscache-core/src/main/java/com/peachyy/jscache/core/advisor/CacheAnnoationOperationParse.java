@@ -96,7 +96,8 @@ public class CacheAnnoationOperationParse implements CacheOperationParse{
         applyBase(cachePutMetadata,targetClass,method);
         cachePutMetadata.setKey(cachePut.key());
         cachePutMetadata.setPrefix(cachePut.prefix());
-        cachePutMetadata.setCondition(cachePut.condition());
+        cachePutMetadata.setArgCondition(cachePut.argCondition());
+        cachePutMetadata.setReturnCondition(cachePut.returnCondition());
         cachePutMetadata.setTtl(cachePut.ttl());
         cachePutMetadata.setAnnotation(cachePut);
         return cachePutMetadata;
@@ -107,7 +108,8 @@ public class CacheAnnoationOperationParse implements CacheOperationParse{
         applyBase(cacheMetadata,targetClass,method);
         cacheMetadata.setKey(cacheable.key());
         cacheMetadata.setPrefix(cacheable.prefix());
-        cacheMetadata.setCondition(cacheable.condition());
+        cacheMetadata.setArgCondition(cacheable.argCondition());
+        cacheMetadata.setReturnCondition(cacheable.returnCondition());
         cacheMetadata.setTtl(cacheable.ttl());
         cacheMetadata.setAnnotation(cacheable);
         return cacheMetadata;
@@ -125,7 +127,7 @@ public class CacheAnnoationOperationParse implements CacheOperationParse{
         applyBase(cacheEvictMetadata,targetClass,method);
         cacheEvictMetadata.setKey(cacheEvict.key());
         cacheEvictMetadata.setPrefix(cacheEvict.prefix());
-        cacheEvictMetadata.setCondition(cacheEvict.condition());
+        cacheEvictMetadata.setArgCondition(cacheEvict.argCondition());
         cacheEvictMetadata.setAnnotation(cacheEvict);
         return cacheEvictMetadata;
     }

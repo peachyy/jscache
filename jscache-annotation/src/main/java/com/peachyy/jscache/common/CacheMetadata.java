@@ -20,9 +20,10 @@ public class CacheMetadata implements Serializable {
     //
     private String prefix;
     private String key;
-    private String condition;
-
-
+    /**
+     * 参数条件
+     */
+    private String argCondition;
     //ann
 
 }

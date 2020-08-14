@@ -37,9 +37,15 @@ public @interface CachePut {
 
     /**
      * cache condition support SpEL
+     * 参数满足条件后 执行此条件表达式
      * @return
      */
-    String condition() default "";
+    String argCondition() default "";
+    /**
+     * 返回值条件 为true则执行缓存结果  使用#result变量 也就是判断返回值
+     * @return
+     */
+    String returnCondition() default "";
 
     /**
      * allow null vlaue

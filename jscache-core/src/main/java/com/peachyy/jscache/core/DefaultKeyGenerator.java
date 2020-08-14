@@ -24,4 +24,16 @@ public class DefaultKeyGenerator implements KeyGenerator {
     public String generate(CacheMetadata metadata, Object[] arguments) {
         return keyGenerator.generate(metadata,arguments);
     }
+
+    @Override
+    public boolean argCondition(CacheMetadata metadata, Object[] arguments) {
+        return keyGenerator.argCondition(metadata,arguments);
+    }
+
+    @Override
+    public boolean returnCondition(CacheMetadata metadata, Object returnValue) {
+        return keyGenerator.returnCondition(metadata,returnValue);
+    }
+
+
 }

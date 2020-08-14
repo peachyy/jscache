@@ -16,7 +16,7 @@ public class CacheConfig {
     public JedisCache cache(){
         Properties properties=new Properties();
         properties.put("hosts","127.0.0.1:6379");
-        properties.put("password","abc123");
+        properties.put("password","120228");
         return new JedisCache(properties,null);
     }
 }

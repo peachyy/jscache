@@ -14,4 +14,5 @@ public class CachePutMetadata extends CacheMetadata {
     private     CachePut  annotation;
     private long      ttl;
     private     boolean   allowNullValue;
+    private String returnCondition;
 }

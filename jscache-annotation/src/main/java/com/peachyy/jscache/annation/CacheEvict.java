@@ -29,7 +29,11 @@ public @interface CacheEvict {
      */
     String key();
 
-    String condition() default "";
+    /**
+     * 参数满足条件后 才会执行此标记
+     * @return
+     */
+    String argCondition() default "";
 
 
 }

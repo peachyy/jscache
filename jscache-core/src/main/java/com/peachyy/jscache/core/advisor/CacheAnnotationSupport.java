@@ -7,10 +7,12 @@ import com.peachyy.jscache.common.CacheableMetadata;
 import com.peachyy.jscache.core.CacheService;
 import com.peachyy.jscache.core.exception.CacheException;
 import com.peachyy.jscache.core.key.KeyGenerator;
+import com.peachyy.jscache.core.support.NullValue;
 
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
+import org.springframework.util.StringUtils;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -91,13 +93,14 @@ public abstract class CacheAnnotationSupport   {
     protected Object doCacheable(OperatorContext context){
         if(!CollectionUtils.isEmpty(context.getMetadata())){
             List<CacheableMetadata> cacheableMetadata=context.getMetadata().stream()
-                    .map(it->(CacheableMetadata)it).collect(Collectors.toList());
+                    .map(it->(CacheableMetadata)it).
+                    filter(it->StringUtils.isEmpty(it.getArgCondition()) || getKeyGenerator().argCondition(it,context.getArgs())).collect(Collectors.toList());
             for(CacheableMetadata it:cacheableMetadata){
                 String key=generate(it,context.getArgs());
                 Object result=getCache(key);
                 if(result!=null){
-                    log.debug("{} key {} hit",it.getMethod().getName(),key);
-                    return result;
+                    log.debug("{}->{} key {} hit",it.getClazz().getName(),it.getMethod().getName(),key);
+                    return unWrapNullValue(result);
                 }
             }
         }
@@ -106,31 +109,52 @@ public abstract class CacheAnnotationSupport   {
     protected void doEvcits(OperatorContext context){
         if(!CollectionUtils.isEmpty(context.getMetadata())){
             List<CacheEvictMetadata> evictMetadata=context.getMetadata().stream()
-                    .map(it->(CacheEvictMetadata)it).collect(Collectors.toList());
+                    .map(it->(CacheEvictMetadata)it)
+                    .filter(it->StringUtils.isEmpty(it.getArgCondition()) || getKeyGenerator().argCondition(it,context.getArgs()))
+                    .collect(Collectors.toList());
             evictMetadata.forEach(it->{
                 String key=generate(it,context.getArgs());
                 getCache().delete(key);
-                log.debug(" {} key {} evcit!",it.getMethod().getName(),key);
+                log.debug("{}->{} key {} delete success!",it.getClazz().getName(),it.getMethod().getName(),key);
             });
         }
     }
     protected void doPuts(OperatorContext context,Object resultVal){
         if(!CollectionUtils.isEmpty(context.getMetadata())){
             List<CachePutMetadata> putMetadata=context.getMetadata().stream()
-                    .map(it->(CachePutMetadata)it).collect(Collectors.toList());
+                    .map(it->(CachePutMetadata)it)
+                    .filter(it->StringUtils.isEmpty(it.getArgCondition()) || getKeyGenerator().argCondition(it,context.getArgs()))
+                    .collect(Collectors.toList());
             putMetadata.forEach(it->{
-                String key=generate(it,context.getArgs());
-                if(it.getTtl()>0){
-                    getCache().put(key,resultVal,it.getTtl());
-                    log.debug(" {} key {} ttl {} put!",it.getMethod().getName(),key,it.getTtl());
-                }else{
-                    getCache().put(key,resultVal);
-                    log.debug(" {} key {}  put!",it.getMethod().getName(),key);
+                //null value
+                if(!it.isAllowNullValue() && resultVal==null){
+                    return;
+                }
+                if(getKeyGenerator().returnCondition(it,resultVal)){
+                    String key=generate(it,context.getArgs());
+                    if(it.getTtl()>0){
+                        getCache().put(key,wrapNullValue(resultVal,it.isAllowNullValue()),it.getTtl());
+                        log.debug("{}->{} key {} ttl {} put success!",it.getClazz().getName(),it.getMethod().getName(),key,it.getTtl());
+                    }else{
+                        getCache().put(key,wrapNullValue(resultVal,it.isAllowNullValue()));
+                        log.debug("{}->{} key {}  put success!",it.getClazz().getName(),it.getMethod().getName(),key);
+                    }
                 }
             });
         }
     }
-
+    protected Object wrapNullValue(Object reuslt,boolean isAllowNullVlaue){
+        if(reuslt==null && isAllowNullVlaue){
+            return NullValue.INSTANCE;
+        }
+        return reuslt;
+    }
+    protected Object unWrapNullValue(Object reuslt){
+        if(NullValue.INSTANCE == reuslt){
+            return null;
+        }
+        return reuslt;
+    }
     public abstract CacheService getCache();
 
     public abstract KeyGenerator getKeyGenerator();
@@ -151,7 +175,7 @@ public abstract class CacheAnnotationSupport   {
                 put.setAnnotation(null);
                 put.setTtl(it.getTtl());
                 put.setClazz(it.getClazz());
-                put.setCondition(it.getCondition());
+                put.setReturnCondition(it.getReturnCondition());
                 put.setKey(it.getKey());
                 put.setMethod(it.getMethod());
                 put.setParameterTypes(it.getParameterTypes());

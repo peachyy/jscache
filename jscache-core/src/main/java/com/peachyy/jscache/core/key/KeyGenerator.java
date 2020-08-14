@@ -15,4 +15,9 @@ public interface KeyGenerator {
     String  generate(CacheMetadata metadata);
 
     String generate(CacheMetadata metadata,Object[] arguments);
+
+
+    boolean argCondition(CacheMetadata metadata,Object[] arguments);
+
+    boolean returnCondition(CacheMetadata metadata,Object returnValue);
 }

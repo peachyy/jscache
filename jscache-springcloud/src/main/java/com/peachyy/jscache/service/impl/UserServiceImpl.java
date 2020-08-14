@@ -26,7 +26,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
 
-    @Cacheable(prefix = "name",key = "#p0",ttl = 60)
+    @Cacheable(prefix = "names",key = "#p0",ttl = 60,returnCondition = "#result!=null")
     public User getUserById(Integer userId) {
         User user=new User();
         user.setId(userId);
@@ -61,7 +61,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @CacheEvict(prefix = "name",key = "#p0")
-    @CacheEvict(prefix = "aname",key = "#p0")
+    @CacheEvict(prefix = "aname",key = "#p0",argCondition = "#p0==100")
     public void deleteUser(Integer userId) {
         log.info("删除了用户{}",userId);
     }
