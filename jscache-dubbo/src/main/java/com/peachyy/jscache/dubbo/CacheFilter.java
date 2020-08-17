@@ -36,7 +36,8 @@ public class CacheFilter implements Filter {
             Cacheable cacheable =cacheMetadata.getMethod().getAnnotation(Cacheable.class);
             cacheMetadata.setKey(cacheable.key());
             cacheMetadata.setPrefix(cacheable.prefix());
-            cacheMetadata.setCondition(cacheable.condition());
+            cacheMetadata.setArgCondition(cacheable.argCondition());
+            cacheMetadata.setReturnCondition(cacheable.returnCondition());
             cacheMetadata.setTtl(cacheable.ttl());
             String key=keyGenerator.generate(cacheMetadata);
             Object o=cacheService.getCache(key);
