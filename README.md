@@ -1,5 +1,9 @@
 # jscache
 
+[![Build Status](https://travis-ci.org/peachyy/jscache.svg?branch=master)](https://travis-ci.org/peachyy/jscache)
+
+
+
 jscache is a java simple cache framework.
 
 一个轮子 Java 简单的缓存工具(cache)，支持本地缓存与远程调用(RPC)缓存保持共用一套规范，基于Spring AOP、Spring El
