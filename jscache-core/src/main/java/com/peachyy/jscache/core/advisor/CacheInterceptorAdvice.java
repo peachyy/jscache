@@ -48,7 +48,7 @@ public class CacheInterceptorAdvice  extends  CacheAnnotationSupport implements 
                throw new CacheException(throwable);
             }
         };
-        return execute(c,invocation.getThis(),invocation.getMethod(),invocation.getArguments());
+        return execute(c,invocation.getThis().getClass(),invocation.getMethod(),invocation.getArguments());
 
     }
 

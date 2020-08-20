@@ -32,15 +32,15 @@ public abstract class CacheAnnotationSupport   {
 
 
 
-    public Object execute(CacheInvoker invoker, Object this_, Method method, Object[] args){
-        List<CacheMetadata> cacheMetadata=getCacheMetadata(method,this_.getClass());
+    public Object execute(CacheInvoker invoker, Class thisClazz, Method method, Object[] args){
+        List<CacheMetadata> cacheMetadata=getCacheMetadata(method,thisClazz);
         if(CollectionUtils.isEmpty(cacheMetadata)){
             return invoker.invoke();
         }
-        return execute(invoker,cacheMetadata,this_,method,args);
+        return execute(invoker,cacheMetadata,thisClazz,method,args);
     }
 
-    public Object execute(CacheInvoker invoker,List<CacheMetadata> cacheMetadata, Object this_, Method method,Object[] args){
+    public Object execute(CacheInvoker invoker,List<CacheMetadata> cacheMetadata, Class thisClazz, Method method,Object[] args){
        MultiValueMap<Class<? extends CacheMetadata>,CacheMetadata> cacheMetadataMaps=
                new LinkedMultiValueMap<>(cacheMetadata.size());
         cacheMetadata.forEach(it->{
