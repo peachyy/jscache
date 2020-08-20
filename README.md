@@ -116,8 +116,8 @@ public class Application {
 ```
 
 
-支持的RPC框架
+适配的RPC框架
 
-* dubbo  未实现
+* dubbo  已实现
 * spring cloud   未实现
 * grpc   未实现
