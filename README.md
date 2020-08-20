@@ -29,7 +29,7 @@ jscache-annotation 原注解信息
 
 jscache-core       实现
 
-jscache-dubbo      dubbo适配 `规划中 如果dubbo bean 是被spring管理的 那么不需要此模块也能被AOP到，没有被管理的情况下 加入此模块 缓存注解写到接口上 就支持适配` 
+jscache-dubbo      dubbo适配 `如果dubbo bean 是被spring管理的 那么不需要此模块也能被AOP到，没有被管理的情况下 加入此模块 缓存注解写到接口上 就支持适配` 
 
 jscache-grpc       grpc适配 `规划中`
  
