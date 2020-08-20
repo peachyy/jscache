@@ -15,8 +15,8 @@ public class CacheConfig {
     @Bean
     public JedisCache cache(){
         Properties properties=new Properties();
-        properties.put("hosts","127.0.0.1:6379");
-        properties.put("password","120228");
+        properties.put("hosts","47.106.117.45:6379");
+        properties.put("password","hyzh@2018");
         return new JedisCache(properties,null);
     }
 }
