@@ -2,6 +2,7 @@ package com.peachyy.jscache.core;
 
 import com.peachyy.jscache.core.advisor.CacheAdvisorSelector;
 
+import org.springframework.context.annotation.AdviceMode;
 import org.springframework.context.annotation.Import;
 import org.springframework.core.Ordered;
 
@@ -23,4 +24,8 @@ public @interface EnableCache {
     String serializer() default "fastJson";
 
     int order() default Ordered.LOWEST_PRECEDENCE;
+
+    AdviceMode mode() default AdviceMode.PROXY;
+
+    boolean proxyTargetClass() default false;
 }

@@ -14,11 +14,10 @@
     <module>jscache-dubbo</module>
     <module>jscache-springcloud</module>
     <module>jscache-grpc</module>
-
     <module>jscache-springmvc-example</module>
   </modules>
 
-  <name>peachyy-cache</name>
+  <name>${project.artifactId}</name>
   <url>https://github.com/peachyy</url>
 
   <properties>

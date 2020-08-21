@@ -4,11 +4,13 @@ import com.peachyy.jscache.core.EnableCache;
 import com.peachyy.jscache.core.serialize.SearializerUtils;
 import com.peachyy.jscache.core.utils.MapUtils;
 
+import org.springframework.aop.config.AopConfigUtils;
 import org.springframework.beans.MutablePropertyValues;
 import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.beans.factory.support.RootBeanDefinition;
+import org.springframework.context.annotation.AdviceMode;
 import org.springframework.context.annotation.ImportBeanDefinitionRegistrar;
 import org.springframework.core.type.AnnotationMetadata;
 
@@ -27,6 +29,14 @@ public class CacheAdvisorSelector implements ImportBeanDefinitionRegistrar {
                 false);
         int order= MapUtils.getInteger(attributes,"order");
         String serializer=MapUtils.getString(attributes,"serializer","fastJson");
+        Object mode = attributes.get("mode");
+        Boolean proxyTargetClass = MapUtils.getBoolean(attributes,"proxyTargetClass");
+        if(mode == AdviceMode.PROXY) {
+            AopConfigUtils.registerAutoProxyCreatorIfNecessary(registry);
+            if(proxyTargetClass!=null && proxyTargetClass.equals(Boolean.TRUE)){
+                AopConfigUtils.forceAutoProxyCreatorToUseClassProxying(registry);
+            }
+        }
         RootBeanDefinition            cacheAdvisor =new RootBeanDefinition(CacheAdvisor.class);
         cacheAdvisor.setRole(BeanDefinition.ROLE_INFRASTRUCTURE);
         cacheAdvisor.setAutowireMode( AutowireCapableBeanFactory.AUTOWIRE_BY_NAME);
