@@ -12,6 +12,7 @@ import com.peachyy.jscache.common.CacheableMetadata;
 
 import org.springframework.core.annotation.AnnotatedElementUtils;
 import org.springframework.util.ObjectUtils;
+import org.springframework.util.StringUtils;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
@@ -45,11 +46,30 @@ public class CacheAnnoationOperationParse implements CacheOperationParse{
     }
     private final List<CacheMetadata> empty= Collections.emptyList();
 
+    private String[] basePackages;
+
+    public void setBasePackages(String[] basePackages) {
+        this.basePackages = basePackages;
+    }
+    public boolean include(String className){
+        if(basePackages==null || basePackages.length==0){
+            return true;
+        }
+        for(String pack:basePackages){
+            if(StringUtils.startsWithIgnoreCase(className,pack)){
+                return true;
+            }
+        }
+        return false;
+    }
 
     @Override
     public List<CacheMetadata> findOperation(Method method,Class targetClass){
         CacheKey cacheKey=new CacheKey(method,targetClass);
         if(!cachesHold.containsKey(cacheKey)){
+            if(!include(targetClass.getName())){
+                return null;
+            }
             Optional<List<CacheMetadata>> lstOptional=loadOperation(method,targetClass);
             if(lstOptional.isPresent()) {
                 cachesHold.putIfAbsent(cacheKey,lstOptional.get());

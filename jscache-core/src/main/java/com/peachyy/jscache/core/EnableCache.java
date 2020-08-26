@@ -20,6 +20,17 @@ import java.lang.annotation.Target;
 @Documented
 @Import(CacheAdvisorSelector.class)
 public @interface EnableCache {
+    /**
+     * Alias for the {@link #basePackages()}
+     * @return
+     */
+    String[] value() default "";
+
+    /**
+     * AOP的packages包名 不设置表示 不限制
+     * @return
+     */
+    String[] basePackages() default "";
 
     String serializer() default "fastJson";
 

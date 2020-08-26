@@ -13,8 +13,12 @@ import org.springframework.beans.factory.support.RootBeanDefinition;
 import org.springframework.context.annotation.AdviceMode;
 import org.springframework.context.annotation.ImportBeanDefinitionRegistrar;
 import org.springframework.core.type.AnnotationMetadata;
+import org.springframework.util.StringUtils;
 
+import java.util.Arrays;
+import java.util.LinkedHashSet;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Xs.Tao
@@ -37,7 +41,10 @@ public class CacheAdvisorSelector implements ImportBeanDefinitionRegistrar {
                 AopConfigUtils.forceAutoProxyCreatorToUseClassProxying(registry);
             }
         }
-        RootBeanDefinition            cacheAdvisor =new RootBeanDefinition(CacheAdvisor.class);
+        Set<String>        basePackages = new LinkedHashSet<>();
+        Arrays.stream(MapUtils.getStringArray(attributes,"value")).filter(StringUtils::hasText).forEach(basePackages::add);
+        Arrays.stream(MapUtils.getStringArray(attributes,"basePackages")).filter(StringUtils::hasText).forEach(basePackages::add);
+        RootBeanDefinition cacheAdvisor =new RootBeanDefinition(CacheAdvisor.class);
         cacheAdvisor.setRole(BeanDefinition.ROLE_INFRASTRUCTURE);
         cacheAdvisor.setAutowireMode( AutowireCapableBeanFactory.AUTOWIRE_BY_NAME);
         MutablePropertyValues values=new MutablePropertyValues();
@@ -54,7 +61,9 @@ public class CacheAdvisorSelector implements ImportBeanDefinitionRegistrar {
 
         RootBeanDefinition cacheOperationParse=new RootBeanDefinition(CacheAnnoationOperationParse.class);
         cacheOperationParse.setRole(BeanDefinition.ROLE_INFRASTRUCTURE);
-
+        MutablePropertyValues parseValues=new MutablePropertyValues();
+        parseValues.addPropertyValue("basePackages",basePackages.toArray(new String[]{}));
+        cacheOperationParse.setPropertyValues(parseValues);
         registry.registerBeanDefinition("cacheAdvisor",cacheAdvisor);
         registry.registerBeanDefinition("cacheAnnationPointcut",cacheAnnationPointcut);
         registry.registerBeanDefinition("cacheInterceptorAdvice",cacheInterceptorAdvice);
