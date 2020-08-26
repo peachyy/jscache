@@ -33,7 +33,6 @@ jscache-dubbo      dubbo适配 `如果dubbo bean 是被spring管理的 那么不
 
 jscache-grpc       grpc适配 `规划中`
  
-jscache-springcloud springcloud适配 `规划中`
 
 jscache-springmvc-example 一个demo 
 
